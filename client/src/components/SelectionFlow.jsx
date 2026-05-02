@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 
 const SelectionFlow = ({ activeTab, selection, setSelection }) => {
     const [step, setStep] = useState(1);
