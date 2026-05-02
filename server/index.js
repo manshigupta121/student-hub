@@ -49,17 +49,25 @@ const upload = multer({ storage });
 app.use('/uploads', express.static('uploads'));
 
 // 3. Upload Route
+// 2. DYNAMIC PDF URL FIX
 app.post('/api/upload-quantum', upload.single('pdf'), async (req, res) => {
   const { subjectName, branch, semester } = req.body;
+  
+  // We use req.get('host') so it automatically uses your Render URL
+  const protocol = req.protocol;
+  const host = req.get('host');
+  
   const newQuantum = new Quantum({
     subjectName,
     branch,
     semester,
-    pdfUrl: `http://localhost:5000/uploads/${req.file.filename}`
+    pdfUrl: `${protocol}://${host}/uploads/${req.file.filename}`
   });
+
   await newQuantum.save();
   res.json({ message: "Uploaded successfully!" });
 });
 
-const PORT = 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// 3. DYNAMIC PORT FIX (Crucial for Render)
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, '0.0.0.0', () => console.log(`Server running on port ${PORT}`));
