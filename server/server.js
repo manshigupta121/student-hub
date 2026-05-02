@@ -22,12 +22,19 @@ const Schedule = mongoose.model('Schedule', scheduleSchema);
 const app = express(); // App initialized FIRST
 
 // Middleware
-app.use(cors());
+// --- UPDATED MIDDLEWARE ---
+app.use(cors({
+    origin: "*", // Allows your Vercel app to talk to Render
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+}));
 app.use(express.json());
 
 // Health Check
+// --- ADD THIS TEST ROUTE ---
+// Open this on your phone: https://your-render-link.onrender.com/api/test
 app.get('/api/test', (req, res) => {
-    res.send("Server is alive and recognizing routes!");
+    res.json({ message: "Backend is reachable from this device!", timestamp: new Date() });
 });
 
 // MongoDB Connection
@@ -167,8 +174,8 @@ app.post('/api/auth/login', async (req, res) => {
     }
 });
 
-// Start Server
+// --- UPDATED START SERVER ---
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => { // "0.0.0.0" is critical for external access
+    console.log(`🚀 Server running on port ${PORT}`);
 });
