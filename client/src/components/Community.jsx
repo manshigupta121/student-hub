@@ -28,7 +28,7 @@ const Community = () => {
 
     const fetchMessages = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/messages');
+            const res = await axios.get('https://student-hub-l8yf.onrender.com/api/messages');
             setMessages(res.data);
             setIsLoading(false);
         } catch (err) {
@@ -42,7 +42,7 @@ const Community = () => {
         if (!input.trim()) return;
 
         try {
-            const res = await axios.post('http://localhost:5000/api/messages', {
+            const res = await axios.post('https://student-hub-l8yf.onrender.com/api/messages', {
                 text: input,
                 user: userName
             });

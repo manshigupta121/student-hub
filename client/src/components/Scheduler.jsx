@@ -16,7 +16,7 @@ const Scheduler = ({ styles }) => {
     const [form, setForm] = useState({ day: '', subject: '', time: '', books: '' });
 
     const fetchSchedule = () => {
-        axios.get('http://localhost:5000/api/schedule')
+        axios.get('https://student-hub-l8yf.onrender.com/api/schedule')
             .then(res => setSchedule(res.data))
             .catch(err => console.error(err));
     };
@@ -27,7 +27,7 @@ const Scheduler = ({ styles }) => {
 
     const deleteItem = (id) => {
         if (window.confirm("Are you sure you want to delete this lecture permanently?")) {
-            axios.delete(`http://localhost:5000/api/schedule/${id}`)
+            axios.delete(`https://student-hub-l8yf.onrender.com/api/schedule/${id}`)
                 .then(() => {
                     setSchedule(schedule.filter(item => item._id !== id));
                 })
@@ -46,7 +46,7 @@ const Scheduler = ({ styles }) => {
             schedule.forEach(item => {
                 if (item.time === hourMin && now.getSeconds() === 0) {
                     alert(`⏰ TIME FOR CLASS: ${item.subject}\nPack: ${item.books}`);
-                    axios.post('http://localhost:5000/api/notifications', {
+                    axios.post('https://student-hub-l8yf.onrender.com/api/notifications', {
                         title: `Class Reminder: ${item.subject}`,
                         link: "/home",
                         date: new Date()
@@ -61,7 +61,7 @@ const Scheduler = ({ styles }) => {
         e.preventDefault();
         if(!form.time || !form.subject) return alert("Please set a time and subject!");
 
-        axios.post('http://localhost:5000/api/schedule', form)
+        axios.post('https://student-hub-l8yf.onrender.com/api/schedule', form)
             .then(() => {
                 fetchSchedule();
                 setForm({ day: '', subject: '', time: '', books: '' });

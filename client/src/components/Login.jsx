@@ -19,7 +19,7 @@ const Login = ({ onLoginSuccess }) => {
         }
 
         try {
-            const res = await axios.post(`http://localhost:5000${url}`, payload);
+            const res = await axios.post(`https://student-hub-l8yf.onrender.com${url}`, payload);
             
             if (!isRegister) {
                 localStorage.setItem('token', res.data.token);

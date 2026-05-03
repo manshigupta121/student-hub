@@ -7,7 +7,7 @@ const QuantumSection = () => {
     const fetchQuantums = (branch) => {
         setSelectedBranch(branch);
         // Fetching from your MongoDB based on branch
-        fetch(`http://localhost:5000/api/quantums/${branch}/all`)
+        fetch(`https://student-hub-l8yf.onrender.com/api/quantums/${branch}/all`)
             .then(res => res.json())
             .then(data => setQuantums(data))
             .catch(err => console.error("Error fetching quantums:", err));

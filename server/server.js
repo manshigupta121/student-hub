@@ -22,9 +22,9 @@ const Schedule = mongoose.model('Schedule', scheduleSchema);
 const app = express(); // App initialized FIRST
 
 // Middleware
-// --- UPDATED MIDDLEWARE ---
+// --- FIXED MIDDLEWARE ---
 app.use(cors({
-    origin: "*", // Allows your Vercel app to talk to Render
+    origin: "*", 
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));
@@ -38,11 +38,16 @@ app.get('/api/test', (req, res) => {
 });
 
 // MongoDB Connection
-const MONGO_URI = process.env.MONGO_URI || "your_mongodb_atlas_connection_string_here";
+// Make sure to add MONGO_URI to your Render Environment Variables!
+const MONGO_URI = process.env.MONGO_URI;
 
-mongoose.connect(MONGO_URI)
-    .then(() => console.log("✅ Connected to MongoDB Atlas"))
-    .catch(err => console.error("❌ MongoDB Connection Error:", err));
+if (!MONGO_URI) {
+    console.error("❌ ERROR: MONGO_URI is not defined in environment variables!");
+} else {
+    mongoose.connect(MONGO_URI)
+        .then(() => console.log("✅ Connected to MongoDB Atlas"))
+        .catch(err => console.error("❌ MongoDB Connection Error:", err));
+}
 
 // --- API ROUTES ---
 
